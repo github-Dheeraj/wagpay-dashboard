@@ -1,8 +1,39 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import React, { useState } from "react";
+import { createClient } from '@layerzerolabs/scan-client';
+const client = createClient('testnet');
+import {getAllTheTxParameters} from '../server/data.js';
 
 export default function Home() {
+  //const status = useGetTransactionData(hash);
+
+
+  const useGetTransactionData = (hash) =>{
+    const [status, setStatus] = useState('');
+    let msgStatus;
+    client
+      .getMessagesBySrcTxHash('0xaf38050c54da0d4f4242b11c37811ded98c1c13319ef2b8359843f38c39c269f')
+      .then((result) => {
+        console.log(result.messages);
+        //'INFLIGHT' | 'DELIVERED' | 'FAILED';
+        msgStatus = result.messages[0].status;
+        while (msgStatus !== 'DELIVERED') {
+          msgStatus = result.messages[0].status;
+          console.log('check status: ' + msgStatus);
+        }
+
+        if(status === 'DELIVERED') {
+          getAllTheTxParameters(result.messages)
+          setStatus(result.messages[0].status)
+          console.log('done');
+        }
+
+    });
+    return status;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -49,6 +80,7 @@ export default function Home() {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
+          <button onClick={gettransaction} className={styles.button}> check-result</button>
         </div>
       </main>
 
