@@ -1,5 +1,7 @@
 //import {createClient} from '@layerzerolabs/scan-client';
 const ethers = require('ethers');
+var cors = require('cors')
+
 // import { createClient } from '@layerzerolabs/scan-client';
 // const client = createClient('testnet');
 
@@ -114,6 +116,9 @@ const getInfoFromSendTransaction = async () =>{
 
       }
 }
+
+// app.use(cors()) 
+
 
 
 

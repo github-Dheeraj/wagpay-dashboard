@@ -1,38 +1,23 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import React, { useState } from "react";
-import { createClient } from '@layerzerolabs/scan-client';
-const client = createClient('testnet');
-import {getAllTheTxParameters} from '../server/data.js';
-
+import React, { useState, useEffect } from "react";
+import { useGetTransactionData} from './getTransaction'
 export default function Home() {
-  //const status = useGetTransactionData(hash);
+  //const [status, setStatus] = useState('');
+  const {status ,setHash} = useGetTransactionData()
+  let hash ='0x2e1f5be7fb219f9c023c63e9fd2d298cdbc690993b76b99b2c60d79d05b59166'
 
+ const getTransactionFromhash = (hash) => {
+  setTimeout(() => {
+    setHash(hash)
+  }, 2000);
+ }
 
-  const useGetTransactionData = (hash) =>{
-    const [status, setStatus] = useState('');
-    let msgStatus;
-    client
-      .getMessagesBySrcTxHash('0xaf38050c54da0d4f4242b11c37811ded98c1c13319ef2b8359843f38c39c269f')
-      .then((result) => {
-        console.log(result.messages);
-        //'INFLIGHT' | 'DELIVERED' | 'FAILED';
-        msgStatus = result.messages[0].status;
-        while (msgStatus !== 'DELIVERED') {
-          msgStatus = result.messages[0].status;
-          console.log('check status: ' + msgStatus);
-        }
+useEffect(() =>{
+  console.log(status)
+},[status])
 
-        if(status === 'DELIVERED') {
-          getAllTheTxParameters(result.messages)
-          setStatus(result.messages[0].status)
-          console.log('done');
-        }
-
-    });
-    return status;
-  }
 
   return (
     <div className={styles.container}>
@@ -80,7 +65,7 @@ export default function Home() {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
-          <button onClick={gettransaction} className={styles.button}> check-result</button>
+          <button onClick={() => getTransactionFromhash(hash)} className={styles.button}> check-result</button>
         </div>
       </main>
 
