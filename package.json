@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@bundlr-network/client": "^0.8.6",
     "@layerzerolabs/scan-client": "^0.0.0-beta.6",
+    "bignumber.js": "^9.1.0",
     "cors": "^2.8.5",
-    "ethers": "^5.7.0",
+    "dotenv": "^16.0.2",
+    "ethers": "^5.7.1",
     "next": "^12.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"

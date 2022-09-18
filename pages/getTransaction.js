@@ -12,7 +12,7 @@ import {
 export const useGetTransactionData = () => {
     const [status, setStatus] = useState('');
     const [hash, setHash] = useState('');
-    const client = createClient('testnet');
+    const client = createClient('mainnet');
     //setHash('0x8433a58d47d1903ff757ff222147b00c923529461de857ca11896b3d086d4615')
 
 
